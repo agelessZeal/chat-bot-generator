@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chat Bot</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://127.0.0.1:3000/html/src/css/styles.css">
+</head>
+<body>
+<section id="demo" class="chat-outer-wrapper">
+<style>.chat-window-ctrl { background: #ee5e60}.chat-avatar-img { background: #ef5af3}</style>
+    <div class="vertical-align">
+        <div class="chat-card-outer-wrapper">
+            <div class="card no-border">
+                <div id="chat" class="conv-form-wrapper">
+<form action="http://127.0.0.1:3000/bot/email/BTCi01c" method="post" id="chat_seven_form" class="hidden" onsubmit="$('#convForm').hide();"><input type="text" conv-question="Hi, Welcome to Business Name-1" no-answer="true">
+                        <select name="Type" conv-question="Are you one of our Patients?" answer="value">
+                            <option value="ExistingPatient">Yes, I'm a an existing patient</option>
+                            <option value="NewPatient">NO, I'm a new patient</option>
+                            <option value="PatientInquiry">NO, I am interested on A</option>
+                        </select>
+                        <input type="text" name="PatientName" conv-question="Great, What is your name and are you interested in a Skin Treatment or a Dental Treatment?">
+                        <input id="telNo" name="PhoneNummber" type="tel" conv-question="We're excited to help you out. Let us know your phone number so that we can follow up in case we get disconnected" pattern="[0-9]">
+                        <input type="email" name="EmailID" conv-question="What's your email address to reach you if we fail to reach you by phone." pattern="@">
+                        <select name="SubType" conv-question="What can I do for you today?">
+                            <option value="TentativeAppointment">TO BOOK AN APPOINTMENT</option>
+                            <option value="LeaveMsg">I WANT TO LEAVE A MESSAGE</option>
+                            <option value="AskQuestion">I WANT TO ASK A QUESTION</option>
+                        </select>
+                        <div conv-fork="SubType">
+                            <div conv-case="TentativeAppointment">
+                                <select name="Date"  conv-question="On which day of the week would you like to schedule your appointment?">
+<option value="Monday">Monday</option>
+<option value="Tuesday">Tuesday</option>
+<option value="Wednesday">Wednesday</option>
+<option value="Sunday">Sunday</option>
+                                </select>
+                                <select name="Time" conv-question="What time of the day do you prefer?">
+                                    <option value="Morning">Morning</option>
+                                    <option value="Afternoon">Afternoon</option>
+                                    <option value="Evening">Evening</option>
+                                </select>
+                                <input type="html" conv-question="Noted. Below is a summary of your appointment request
+                                    <div></div><div></div>
+                                    <!-- {Type}<div></div>-->
+                                    Name - {PatientName}<div></div>
+                                    Email - {EmailID}<div></div>
+                                    Phone - {PhoneNummber}<div></div>
+                                    Preferred Day - {Date}<div></div>
+                                    Preferred Time - {Time}<div></div>" no-answer="true">
+                                <select name="MsgConfirm"
+                                        conv-question="To confirm and send your message, please click on the “Confirm” button. We will get back to you within one working day with THE CONFIRMED DATE AND TIME of your appointment."
+                                        answer="value">
+                                    <option value="2019">Confirm</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div conv-fork="SubType">
+                            <div conv-case="LeaveMsg">
+                                <input type="text" name="TakeDownMessage"
+                                       conv-question="Please leave your message and I will pass it along to our team.">
+                                <input type="html" conv-question="Thank you, I got everything. Below is a summary of the details you provided
+                                        <div></div><div></div>
+                                        <!-- {Type}<div></div>-->
+                                        Name - {PatientName}<div></div>
+                                        Email - {EmailID}<div></div>
+                                        Contact Number - {PhoneNummber}<div></div>
+                                        Message - {TakeDownMessage}<div></div>" no-answer="true">
+                                <select name="MsgConfirm"
+                                        conv-question="To confirm and send your message, please click on the “Confirm” button."
+                                        answer="value">
+                                    <option value="2035">Confirm</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div conv-fork="SubType">
+                            <div conv-case="AskQuestion">
+                                <input type="text" name="TakeDownQuestionOne"
+                                       conv-question="Okay great, how can I help you?">
+                                <input type="html" conv-question="Please leave your message and I will pass it along to our team.
+                                        <div></div><div></div>
+                                        <!-- {Type}<div></div>-->
+                                        Name - {PatientName}<div></div>
+                                        Email - {EmailID}<div></div>
+                                        Contact Number - {PhoneNummber}<div></div>
+                                        Question- {TakeDownQuestionOne}<div></div>" no-answer="true">
+                                <select name="MsgConfirm"
+                                        conv-question="To confirm and send your message, please click on the “Confirm” button."
+                                        answer="value">
+                                    <option value="2035">Confirm</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="text" conv-question="Thank you. I have sent your request to our team. Expect to hear from us shortly. If this is urgent, please call our office on 111 as this may not be responded to immediately,
+                            </br> Have a great day." no-answer="true"></form>
+                </div>
+<div class="footer-power-by"> Powered by <a href="http://127.0.0.1:3000" target="_blank">Business Name-1</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+<script src="http://127.0.0.1:3000/html/src/js/chat_scripts.js"></script>
+</body>
+</html>

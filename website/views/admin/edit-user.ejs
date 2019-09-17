@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ../layouts/header.ejs %>
+<body class="m-page--fluid m-content--skin-light2">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <%- include ../layouts/menubar.ejs %>
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <button class="m-aside-left-close  m-aside-left-close--skin-dark " id="m_aside_left_close_btn">
+            <i class="la la-close"></i>
+        </button>
+        <%- include ../layouts/sidebar.ejs %>
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <!-- END: Subheader -->
+            <div class="m-content">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="user-avatar-wrap">
+                            <div class="user-avatar-absolute">
+                                <img  id="avatar-image" src="<%= (isEdit && userInfo.avatar_path )? userInfo.avatar_path:'/assets/images/no_image.jpg' %>" alt="user avatar">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-8">
+                        <div class="m-portlet m-portlet--tab">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                            <i class="la la-gear"></i>
+                                        </span>
+                                        <h3 class="m-portlet__head-text">
+                                            <%= (isEdit)?'Edit':'Add' %> User Details
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <form action="/admin/users/update?mode=<%= (isEdit)?'edit&user_id='+userInfo.user_id:'create' %>"
+                                  method="post" class="m-form m-form--fit m-form--label-align-right">
+                                <div class="m-portlet__body">
+                                    <div class="form-group m-form__group row">
+                                        <div class="col-12 col-md-8 offset-md-4 ">
+                                            <% if(error && error.length > 0){ %>
+                                                <div class="m-alert m-alert--outline m-alert--outline-2x alert alert-danger alert-dismissible fade show" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                                    <strong> Warning! </strong> <%- error %>
+                                                </div>
+                                            <% } %>
+                                            <% if(success && success.length > 0){ %>
+                                                <div class="m-alert m-alert--outline m-alert--outline-2x alert alert-success alert-dismissible fade show" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                                    <strong> Well done! </strong>
+                                                    <%- success %>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                    <% if(isEdit) {  %>
+                                        <input hidden name="user_id" value="<%= userInfo.user_id %>">
+                                    <% } %>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-4 col-form-label">
+                                            User Name
+                                        </label>
+                                        <div class="col-8">
+                                            <input name="username" value="<%= (isEdit)? userInfo.username:"" %>"
+                                                   class="form-control m-input" required type="text" placeholder="Artisanal kale">
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-search-input" class="col-4 col-form-label">
+                                           Email
+                                        </label>
+                                        <div class="col-8">
+                                            <input name="email"  value="<%= (isEdit)? userInfo.email:"" %>"
+                                                   class="form-control m-input" required type="email" placeholder="user@user.com">
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label">
+                                            Password
+                                        </label>
+                                        <div class="col-8">
+                                            <input name="password"
+                                                   class="form-control m-input" <%= (isEdit)? "":"required" %> type="password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label">
+                                            Confirm Password
+                                        </label>
+                                        <div class="col-8">
+                                            <input name="confirm_password"
+                                                   class="form-control m-input" <%= (isEdit)? "":"required" %> type="password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <div class="col-4"></div>
+                                        <div class="col-8">
+                                            <button type="button" class="btn btn-primary">
+                                                <input id="image-input" accept="image/*"
+                                                       class="form-control m-input"  type="file">
+                                                <input type="hidden" id="avatar_path" name="avatar_path" value="<%= (isEdit && userInfo.avatar_path )? userInfo.avatar_path:'/assets/images/no_image.jpg' %>">
+                                             Upload Avatar
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="m-portlet__foot m-portlet__foot--fit">
+                                    <div class="m-form__actions">
+                                        <div class="row">
+                                            <div class="col-4"></div>
+                                            <div class="col-8">
+                                                <button type="submit" class="btn btn-success">
+                                                    <%= (isEdit)?'Update':'Submit' %>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include ../layouts/footer.ejs %>
+</div>
+<%- include ../layouts/scripts.ejs %>
+
+<script>
+    var imgtype = 'avatar';
+</script>
+<%- include ../component/cropperjs.ejs %>
+
+<script>
+    setTimeout(function () {
+        hideNotifications();
+    }, 2000);
+    var hideNotifications = function () {
+        $(".alert").slideUp(1000, function () {
+            $(this).remove();
+        })
+    }
+</script>
+</body>
+</html>

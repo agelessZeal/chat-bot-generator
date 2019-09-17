@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chat Bot</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<section id="demo" class="chat-outer-wrapper">
+    <div class="vertical-align">
+        <div class="chat-card-outer-wrapper">
+            <div class="card no-border">
+                <div id="chat" class="conv-form-wrapper">
+                    <form action="https://hooks.zapier.com/hooks/catch/112087/znkzjx/" method="post" id="my_form"
+                          class="hidden" onsubmit="$('#convForm').hide();">
+                        <!--DO NOT CHANGE THE FORM ACTION WEBHOOK UNLESS A NEW ONE IS CREATED -->
+                        <input type="text" conv-question="Hi, Welcome to SSS Clinic" no-answer="true">
+                        <!-- START WELCOME MESSAGE  -->
+                        <select name="Type" conv-question="Are you one of our Patients?" answer="value">
+                            <option value="ExistingPatient">YES, I'M A EXISTING PATIENT</option>
+                            <option value="NewPatient">NO, I'M INTERESTED TO LEARN MORE</option>
+                            <!--    <option value="PatientInquiry" >NO, I'D LIKE TO KNOW MORE ABOUT YOUR SERVICES</option>-->
+                        </select>
+                        <!-- END WELCOME MESSAGE  -->
+                        <!-- START WELCOME OPTIONS - USER HAS TO SELECT TO PROCEED - GENERIC  -->
+                        <input type="text" name="PatientName"
+                               conv-question="Great, What is your name and are you interested in a Skin Treatment or a Dental Treatment?">
+
+                        <!--<input type="text" conv-question="Welcome, {PatientName}! It's a pleasure to meet you." no-answer="true">-->
+
+
+                        <!--<input type="text" name="PhoneNummber" conv-question="May I please have your phone number? " pattern="[0-9]">-->
+
+                        <input id="telNo" name="PhoneNummber" type="tel"
+                               conv-question="We're excited to help you out. Let us know your phone number so that we can follow up in case we get disconnected"
+                               pattern="[0-9]">
+
+                        <!--<input type="text" name="EmailID" conv-question="What's your email address? We will write to you if we fail to reach you by phone. Please enter only your email address." pattern="@">-->
+
+                        <input type="email" name="EmailID"
+                               conv-question="What's your email address to reach you if we fail to reach you by phone."
+                               pattern="@">
+
+                        <select name="SubType" conv-question="What can I do for you today?">
+                            <option value="TentativeAppointment">TO BOOK AN APPOINTMENT</option>
+                            <option value="LeaveMsg">I WANT TO LEAVE A MESSAGE</option>
+                            <option value="AskQuestion">I WANT TO ASK A QUESTION</option>
+                        </select>
+                        <!-- END WELCOME OPTIONS - USER HAS TO SELECT TO PROCEED - GENERIC  -->
+                        <div conv-fork="SubType">
+                            <!-- 1ST LEVEL MAIN CATEGORY GROUPING  -->
+                            <div conv-case="TentativeAppointment">
+
+                                <!-- 1ST LEVEL SUB CATEGORY  I WANT TO BOOK A TENTATIVE APPOINTMENT  -->
+                                <select name="Date"  conv-question="On which day of the week would you like to schedule your appointment?">
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                </select>
+                                <select name="Time" conv-question="What time of the day do you prefer?">
+                                    <option value="Morning">Morning</option>
+                                    <option value="Afternoon">Afternoon</option>
+                                    <option value="Evening">Evening</option>
+                                </select>
+                                <input type="html" conv-question="Noted. Below is a summary of your appointment request
+<div></div><div></div>
+<!-- {Type}<div></div>-->
+Name - {PatientName}<div></div>
+Email - {EmailID}<div></div>
+Phone - {PhoneNummber}<div></div>
+Preferred Day - {Date}<div></div>
+Preferred Time - {Time}<div></div>" no-answer="true">
+                                <select name="MsgConfirm"
+                                        conv-question="To confirm your request for an appointment please click on the “Confirm” button. We will get back to you within one working day with THE CONFIRMED DATE AND TIME of your appointment."
+                                        answer="value">
+                                    <option value="2035">Confirm</option>
+                                </select>
+                            </div>
+                            <!-- 1ST LEVEL SUB CATEGORY  I WANT TO BOOK A TENTATIVE APPOINTMENT END  -->
+
+                        </div>
+                        <!-- 1ST LEVEL MAIN CATEGORY GROUPING END  -->
+                        <div conv-fork="SubType">
+                            <!-- 2ND LEVEL MAIN CATEGORY GROUPING  -->
+                            <div conv-case="LeaveMsg">
+
+                                <!-- 2ND LEVEL SUB CATEGORY I WANT TO LEAVE A MESSAGE   -->
+                                <input type="text" name="TakeDownMessage"
+                                       conv-question="Please leave your message and I will pass it along to our team.">
+                                <input type="html" conv-question="Thank you, I got everything. Below is a summary of the details you provided
+<div></div><div></div>
+<!-- {Type}<div></div>-->
+Name - {PatientName}<div></div>
+Email - {EmailID}<div></div>
+Contact Number - {PhoneNummber}<div></div>
+Message - {TakeDownMessage}<div></div>" no-answer="true">
+                                <select name="MsgConfirm"
+                                        conv-question="To confirm and send your message, please click on the “Confirm” button."
+                                        answer="value">
+                                    <option value="2035">Confirm</option>
+                                </select>
+                            </div>
+                            <!-- 2ND LEVEL SUB CATEGORY I WANT TO LEAVE A MESSAGE  -->
+                        </div>
+                        <!-- 2ND LEVEL MAIN CATEGORY GROUPING END  -->
+                        <div conv-fork="SubType">
+                            <!-- 3RD LEVEL MAIN CATEGORY GROUPING  -->
+                            <div conv-case="AskQuestion">
+                                <!-- 3RD LEVEL SUB CATEGORY  I WANT TO ASK A QUESTION  -->
+                                <input type="text" name="TakeDownQuestionOne"
+                                       conv-question="Okay great, how can I help you?">
+                                <input type="html" conv-question="Thank you, I got everything. Below is a summary of the details you provided
+<div></div><div></div>
+<!-- {Type}<div></div>-->
+Name - {PatientName}<div></div>
+Email - {EmailID}<div></div>
+Contact Number - {PhoneNummber}<div></div>
+Question- {TakeDownQuestionOne}<div></div>" no-answer="true">
+                                <select name="MsgConfirm"
+                                        conv-question="To confirm and send your question, please click on the “Confirm” button."
+                                        answer="value">
+                                    <option value="2035">Confirm</option>
+                                </select>
+                            </div>
+                            <!-- 3RD LEVEL SUB CATEGORY I WANT TO ASK A QUESTION  -->
+                        </div>
+                        <!-- 3RD LEVEL MAIN CATEGORY GROUPING END  -->.
+                        <input type="text" conv-question=" Thank you. I have sent your request to our team. Expect to hear from us shortly. If this is urgent, please call our office on 020 8840 4472 as this may not be responded to immediately,
+</br> Have a great day." no-answer="true">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="assets/js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="assets/js/chat_scripts.js"></script>
+</body>
+</html>

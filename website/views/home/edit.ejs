@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ../layouts/header.ejs %>
+<body class="m-page--fluid m-content--skin-light2">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <%- include ../layouts/menubar.ejs %>
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <button class="m-aside-left-close  m-aside-left-close--skin-dark " id="m_aside_left_close_btn">
+            <i class="la la-close"></i>
+        </button>
+        <%- include ../layouts/sidebar.ejs %>
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <!-- END: Subheader -->
+            <div class="m-content">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-8">
+                        <div class="m-portlet m-portlet--tab">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                            <i class="la la-gear"></i>
+                                        </span>
+                                        <h3 class="m-portlet__head-text">
+                                            <%= (isEdit)?'Edit':'Add' %> Bot Details
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <form action="/update-bot?mode=<%= (isEdit)?'edit&botid='+botInfo.bot_id:'create' %>"
+                                  method="post" class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data">
+                                <div class="m-portlet__body">
+                                    <div class="form-group m-form__group row">
+                                        <div class="col-12 col-md-8 offset-md-4 ">
+                                        <% if(error && error.length > 0){ %>
+                                            <div class="m-alert m-alert--outline m-alert--outline-2x alert alert-danger alert-dismissible fade show" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                                <strong> Warning! </strong> <%- error %>
+                                            </div>
+                                        <% } %>
+                                        <% if(success && success.length > 0){ %>
+                                            <div class="m-alert m-alert--outline m-alert--outline-2x alert alert-success alert-dismissible fade show" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                                <strong> Well done! </strong>
+                                                <%- success %>
+                                            </div>
+                                        <% } %>
+                                        </div>
+                                    </div>
+                                    <% if(isEdit) {  %>
+                                        <input hidden name="bot_id" value="<%= botInfo.bot_id %>">
+                                    <% } %>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-text-input" class="col-4 col-form-label">
+                                            Business Name
+                                        </label>
+                                        <div class="col-8">
+                                            <input name="business_name" value="<%= (isEdit)? botInfo.business_name:"" %>"
+                                                   class="form-control m-input" required type="text" placeholder="Artisanal kale">
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-search-input" class="col-4 col-form-label">
+                                            Website URL
+                                        </label>
+                                        <div class="col-8">
+                                            <input name="site_url"  value="<%= (isEdit)? botInfo.site_url:"" %>"
+                                                   class="form-control m-input" required type="text" placeholder="https://getbootstrap.com">
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label">
+                                            Business Email
+                                        </label>
+                                        <div class="col-8">
+                                            <input name="business_email" value="<%= (isEdit)? botInfo.business_email:"" %>"
+                                                   class="form-control m-input" required type="text" placeholder="aa@gmail.com, bb@gmail.com">
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label">
+                                            Business Phone
+                                        </label>
+                                        <div class="col-8">
+                                            <input name="business_phone" value="<%= (isEdit)? botInfo.business_phone:"" %>"
+                                                   class="form-control m-input" required type="text" placeholder="(XXX) XXX-XXXX">
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-url-input" class="col-4 col-form-label">
+                                            Bot Name
+                                        </label>
+                                        <div class="col-8">
+                                            <input name="bot_name"  id="bot_name" value="<%= (isEdit)? botInfo.bot_name:"HelloBot" %>"
+                                                   class="form-control m-input" type="text" placeholder="HelloBot">
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-url-input" class="col-4 col-form-label">
+                                            Need Help?
+                                        </label>
+                                        <div class="col-8">
+                                            <input name="with_us"  id="with_us" value="<%= (isEdit && botInfo.with_us)? botInfo.with_us:"Chat with us!" %>"
+                                                   class="form-control m-input" type="text" placeholder="Chat with us!">
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="avatar_type" class="col-4 col-form-label">
+                                            Chatbot Avatar
+                                        </label>
+                                        <div class="col-8">
+                                            <div class="chat-avatar-wrap">
+                                                <input type="hidden" name="avatar_path" id="avatar_path" value="<%= (isEdit)?botInfo.avatar_path:'/assets/images/cbta-1.png' %>">
+                                                <div class="chat-avatar-item <%= (isEdit && botInfo.avatar_path=='/assets/images/cbta-1.png')?'active':'' %>"
+                                                     data-path="/assets/images/cbta-1.png">
+                                                    <img src="/assets/images/cbta-1.png">
+                                                </div>
+                                                <div class="chat-avatar-item <%= (isEdit && botInfo.avatar_path=='/assets/images/cbta-2.png')?'active':'' %>" data-path="/assets/images/cbta-2.png">
+                                                    <img src="/assets/images/cbta-2.png">
+                                                </div>
+                                                <div class="chat-avatar-item <%= (isEdit && botInfo.avatar_path=='/assets/images/cbta-3.png')?'active':'' %>" data-path="/assets/images/cbta-3.png">
+                                                    <img src="/assets/images/cbta-3.png">
+                                                </div>
+                                                <div class="chat-avatar-item <%= (isEdit && botInfo.avatar_path=='/assets/images/cbta-4.png')?'active':'' %>" data-path="/assets/images/cbta-4.png">
+                                                    <img src="/assets/images/cbta-4.png">
+                                                </div>
+                                                <div class="chat-avatar-item" data-type="" style="position: relative">
+                                                    <i class="fa fa-plus fa-2x custom-style-plus-btn"></i>
+                                                    <img src="/assets/images/cbta-4.png" style="opacity: 0">
+                                                    <input type="file" id="image-input" accept="image/*">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="p_color" class="col-4 col-form-label">
+                                            Primary color
+                                        </label>
+                                        <div class="col-8">
+                                            <input hidden name="p_color" id="p_color" value="<%= (isEdit)? botInfo.p_color:'#55aacb' %>">
+                                            <div class="chat-primary-color-wrap">
+                                                <div class="chat-color-item-p color-1 <%= (isEdit && botInfo.p_color=='#55aacb')?'active':'' %>" data-color="#55aacb"></div>
+                                                <div class="chat-color-item-p color-2 <%= (isEdit && botInfo.p_color=='#ee5e60')?'active':'' %>" data-color="#ee5e60"></div>
+                                                <div class="chat-color-item-p color-3 <%= (isEdit && botInfo.p_color=='#6b8bff')?'active':'' %>" data-color="#6b8bff"></div>
+                                                <div class="chat-color-item-p color-4 <%= (isEdit && botInfo.p_color=='#ef5af3')?'active':'' %>" data-color="#ef5af3"></div>
+                                                <div class="chat-color-item-p color-4 custom-primary" data-color="">
+                                                    <i class="fa fa-plus fa-2x custom-style-plus-btn"></i>
+                                                    <input type="color" id="custom-primary-color" hidden value="#ef5af3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="s_color" class="col-4 col-form-label">
+                                            Secondary color
+                                        </label>
+                                        <div class="col-8">
+                                            <input hidden name="s_color" id="s_color" value="<%= (isEdit)? botInfo.s_color:'#55aacb' %>" >
+                                            <div class="chat-secondary-color-wrap">
+                                                <div class="chat-color-item-s color-1 <%= (isEdit && botInfo.s_color=='#55aacb')?'active':'' %>" data-color="#55aacb"></div>
+                                                <div class="chat-color-item-s color-2 <%= (isEdit && botInfo.s_color=='#ee5e60')?'active':'' %>" data-color="#ee5e60"></div>
+                                                <div class="chat-color-item-s color-3 <%= (isEdit && botInfo.s_color=='#6b8bff')?'active':'' %>" data-color="#6b8bff"></div>
+                                                <div class="chat-color-item-s color-4 <%= (isEdit && botInfo.s_color=='#ef5af3')?'active':'' %>" data-color="#ef5af3"></div>
+                                                <div class="chat-color-item-s color-4 custom-secondary" data-color="">
+                                                    <i class="fa fa-plus fa-2x custom-style-plus-btn"></i>
+                                                    <input type="color" id="custom-secondary-color" hidden value="#ef5af3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="s_color" class="col-4 col-form-label">
+                                            Opening Days
+                                        </label>
+                                        <div class="col-8">
+                                            <% var i; for(i = 0 ;i< config.opening_days.length; i++) { %>
+                                               <input  hidden name="opening_days" <%= (isEdit && (botInfo.opening_days.indexOf(config.opening_days[i])>-1))?'checked':'';%>
+                                                       <%= (!isEdit)?'checked':'';%>
+                                                      type="checkbox" id="<%= config.opening_days[i] %>-openday" value="<%= config.opening_days[i] %>">
+                                            <% } %>
+                                            <div class="chat-opening-days-wrap">
+                                                <% for(i = 0 ; i<config.opening_days.length; i++ ){ %>
+                                                    <div class="<%= (!isEdit)?'active':'';%> noselect chat-opening-day-item <%= (isEdit && (botInfo.opening_days.indexOf(config.opening_days[i])>-1))?'active':'';%>"><%=  config.opening_days[i] %></div>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="s_color" class="col-4 col-form-label">
+                                            Customer Accept
+                                        </label>
+                                        <div class="col-8">
+                                            <% for(i = 0 ;i< config.customers_accept.length; i++) { %>
+                                                <input  hidden name="customers_accept" <%= (isEdit && (botInfo.customers_accept.indexOf(config.customers_accept[i])>-1))?'checked':'';%>
+                                                        <%= (!isEdit)?'checked':'';%>
+                                                        type="checkbox" id="<%= config.customers_accept[i] %>-customer-accept" value="<%= config.customers_accept[i] %>">
+                                            <% } %>
+                                            <div class="chat-customer-accept-wrap">
+                                                <% for(i = 0 ; i<config.customers_accept.length; i++ ){ %>
+                                                    <div class="<%= (!isEdit)?'active':'';%> noselect chat-customer-accept-item <%= (isEdit && (botInfo.customers_accept.indexOf(config.customers_accept[i])>-1))?'active':'';%>"><%=  config.customers_accept[i] %></div>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="is_wordpress" class="col-4 col-form-label">
+                                            Is Wordpress?
+                                        </label>
+                                        <div class="col-8">
+                                            <div class="m-radio-inline">
+                                                <label class="m-radio">
+                                                    <input type="radio" name="is_wordpress" value="yes"
+                                                            <%= (isEdit && botInfo.is_wordpress)? 'checked':"" %>>
+                                                    Yes
+                                                    <span></span>
+                                                </label>
+                                                <label class="m-radio">
+                                                    <input type="radio" name="is_wordpress" value="no" <%= (!isEdit)?'checked':'';%>
+                                                            <%= (isEdit && !botInfo.is_wordpress)? 'checked':"" %>>
+                                                    No
+                                                    <span></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label">Reply Placeholder</label>
+                                        <div class="col-8">
+                                            <textarea name="reply_text" class="form-control m-input" required><%= (isEdit && botInfo.reply_text)? botInfo.reply_text:config.msg.reply_text %></textarea>
+                                        </div>
+                                    </div>
+
+                                    <input hidden name="icon_path" id="icon_path" value="<%= (isEdit)?botInfo.icon_path:"" %>">
+
+                                    <hr>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="hi" class="form-control m-input" required><%= (isEdit && botInfo.hi)? botInfo.hi:config.msg.hi %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="are_you_our_patient" class="form-control m-input" required><%= (isEdit && botInfo.are_you_our_patient)? botInfo.are_you_our_patient:config.msg.are_you_our_patient %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="yes_existing_patient" class="form-control m-input" required><%= (isEdit && botInfo.yes_existing_patient)? botInfo.yes_existing_patient:config.msg.yes_existing_patient %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="no_new_patient" class="form-control m-input" required><%= (isEdit && botInfo.no_new_patient)? botInfo.no_new_patient:config.msg.no_new_patient %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="no_learn_more" class="form-control m-input" required><%= (isEdit && botInfo.no_learn_more)? botInfo.no_learn_more:config.msg.no_learn_more %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="what_is_your_name" class="form-control m-input" required><%= (isEdit && botInfo.what_is_your_name)? botInfo.what_is_your_name:config.msg.what_is_your_name %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="what_is_phone" class="form-control m-input" required><%= (isEdit && botInfo.what_is_phone)? botInfo.what_is_phone:config.msg.what_is_phone %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="what_is_your_email" class="form-control m-input" required><%= (isEdit && botInfo.what_is_your_email)? botInfo.what_is_your_email:config.msg.what_is_your_email %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="what_can_i_do_today" class="form-control m-input" required><%= (isEdit && botInfo.what_can_i_do_today)? botInfo.what_can_i_do_today:config.msg.what_can_i_do_today %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="to_book" class="form-control m-input" required><%= (isEdit && botInfo.to_book)? botInfo.to_book:config.msg.to_book %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="to_leave_msg" class="form-control m-input" required><%= (isEdit && botInfo.to_leave_msg)? botInfo.to_leave_msg:config.msg.to_leave_msg %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="to_ask_question" class="form-control m-input" required><%= (isEdit && botInfo.to_ask_question)? botInfo.to_ask_question:config.msg.to_ask_question %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="day_week_schedule" class="form-control m-input" required><%= (isEdit && botInfo.day_week_schedule)? botInfo.day_week_schedule:config.msg.day_week_schedule %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="what_time_of_day" class="form-control m-input" required><%= (isEdit && botInfo.what_time_of_day)? botInfo.what_time_of_day:config.msg.what_time_of_day %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="please_leave_your_msg" class="form-control m-input" required><%= (isEdit && botInfo.please_leave_your_msg)? botInfo.please_leave_your_msg:config.msg.please_leave_your_msg %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="how_can_i_help" class="form-control m-input" required><%= (isEdit && botInfo.how_can_i_help)? botInfo.how_can_i_help:config.msg.how_can_i_help %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="msg_confirm" class="form-control m-input" required><%= (isEdit && botInfo.msg_confirm)? botInfo.msg_confirm:config.msg.msg_confirm %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="click_confirm_btn" class="form-control m-input" required><%= (isEdit && botInfo.click_confirm_btn)? botInfo.click_confirm_btn:config.msg.click_confirm_btn %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="we_will_back" class="form-control m-input" required><%= (isEdit && botInfo.we_will_back)? botInfo.we_will_back:config.msg.we_will_back %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="noted_summary" class="form-control m-input" required><%= (isEdit && botInfo.noted_summary)? botInfo.noted_summary:config.msg.noted_summary %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="thank_you_got_everything" class="form-control m-input" required><%= (isEdit && botInfo.thank_you_got_everything)? botInfo.thank_you_got_everything:config.msg.thank_you_got_everything %></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label for="example-email-input" class="col-4 col-form-label"></label>
+                                        <div class="col-8">
+                                            <textarea name="thank_you_last_string" class="form-control m-input" required><%= (isEdit && botInfo.thank_you_last_string)? botInfo.thank_you_last_string:config.msg.thank_you_last_string %></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__foot m-portlet__foot--fit">
+                                    <div class="m-form__actions">
+                                        <div class="row">
+                                            <div class="col-4"></div>
+                                            <div class="col-8">
+                                                <button type="submit" class="btn btn-success">
+                                                    Save & Continue
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4">
+                        <h3 class="preview-title">THIS IS HOW YOUR CHATBOT</h3>
+                        <h3 class="preview-title">WILL APPEAR ON YOUR WEBSITE<span class="down-direction-dingbat">&#x261D;</span></h3>
+                        <div class="chat-box-preview">
+                            <div class="chat-box-header" style="background-color: <%= (isEdit)? botInfo.p_color:"#55aacb" %>">
+                                <div class="chat-box-avatar-header avatar-img-icon" style="background-color: <%= (isEdit)? botInfo.s_color:"#55aacb" %>">
+                                    <img src="<%= (isEdit)? botInfo.avatar_path:"/assets/images/cbta-1.png" %>" id="avatar-image">
+                                </div>
+                                <p class="chat-box-preview-name"><%= (isEdit)? botInfo.bot_name:"HelloBot" %></p>
+                                <div class="chat-ctrl-btn js-window-btn-minimize">
+                                    <i class="fa fa-minus-square"></i>
+                                </div>
+                            </div>
+                            <div class="chat-box-body"></div>
+                        </div>
+
+                         <div id="chatbot-icon">
+                            <div class="transparent-tag"></div>
+                            <div class="avatar-area"></div>
+                            <div class="need-help">Need Help?</div>
+                            <div class="chat-with-us"><%= (isEdit && botInfo.with_us)?botInfo.with_us:"Chat with us!" %></div>
+                            <div class="avatar-wrap" style="background-color: <%= (isEdit)? botInfo.s_color:"#55aacb" %>">
+                                <img src="<%= (isEdit)? botInfo.avatar_path:"/assets/images/cbta-1.png" %>">
+                            </div>
+                        </div>
+                        <a id="btn-Convert-Html2Image" href="#" style="display: none">Download</a>
+                        <div id="icon-previewImage" style="display: none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include ../layouts/footer.ejs %>
+</div>
+<%- include ../layouts/scripts.ejs %>
+
+<script>
+    var imgtype = 'bot';
+</script>
+<%- include ../component/cropperjs.ejs %>
+
+<script src="/assets/js/create_bot.js"></script>
+
+<script>
+    setTimeout(function () {
+        hideNotifications();
+    }, 2000);
+    var hideNotifications = function () {
+        $(".alert").slideUp(600, function () {
+            $(this).remove();
+        })
+    }
+</script>
+</body>
+</html>
