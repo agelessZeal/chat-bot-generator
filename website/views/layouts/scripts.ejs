@@ -1,0 +1,20 @@
+<div class="m-scroll-top m-scroll-top--skin-top" data-toggle="m-scroll-top" data-scroll-offset="500"
+     data-scroll-speed="300">
+    <i class="la la-arrow-up"></i>
+</div>
+
+<%- include ../component/page-loading.ejs %>
+
+<script src="/assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
+<script src="/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
+
+<script src="/plugins/cropperjs/cropper.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.loading-container').fadeOut(2000);
+    });
+</script>
+
+
+<script type = "text/javascript">var cssResources=["https://dentistify.com/html/src/css/styles.min.css"],botPlaceHolder="Type Here / Select Option From Above";jsResources=["https://dentistify.com/html/src/js/chat_scripts.js"],avatarIcon="https://dentistify.com/assets/images/cbta-2.png",bubbleImge="https://dentistify.com/uploads/icon/AV4NSQo7LG0k.png",chatBotName="HelloBot",jQCheck=function(e,t){"undefined"==typeof jQuery?t>0?(console.log(t),setTimeout(function(){jQCheck(e,t-1)},5)):(console.log("jQuery required to load chat bot so hot loading"),resourceInjector(document,"script","https://www.bots.ekwa.com/js/jquery-1.12.3.min.js",null,e)):e()},uiSetter=function(e,t,s){var a=e;s.match(/^(?:https?:)?(?:\/\/)?([^\/\?]+)/)[0],s.match(/(?:.+\/)(.+?)(\..+)?$/)[1];if(t)a='<a target="_blank" href="'+s+'"><div class="chat-bubble-btn-wrapper chatprompt"><img src="'+avatarIcon+'" alt="Chat Bubble"></div></a>',$("body").append(a),resourceInjector(document,"link",cssResources[0]);else{a='<div class="chat-bubble-btn-wrapper chatprompt js-window-btn-maximize"><img src="'+bubbleImge+'" alt="Chat Bubble"></div><div class="chat-window-wrapper minimized chat-outer-wrapper"> <div class="chat-window-ctrl"> <div class="chat-avatar-img"><img src="'+avatarIcon+'" alt="Chat Bubble"></div> <div class="chat-bot-name"><p>'+chatBotName+'</p></div> <div class="chat-ctrl-btn js-window-btn-minimize active"><i class="fa fa-minus-square"></i></div> </div> <div class="chat-container"> </div></div>';for(var i=0;i<cssResources.length;i++)resourceInjector(document,"link",cssResources[i]);$("body").append(a),$(".chat-container").append(e);for(i=0;i<jsResources.length;i++)resourceInjector(document,"script",jsResources[i])}},resourceInjector=function(e,t,s,a,i){var c=e.createElement(t);(i&&(c.onload=function(){i()}),"script"==t&&(c.async=!0,c.src=s),"link"==t&&(c.href=s,c.rel="stylesheet"),a)?e.getElementsByTagName(a)[0].parentNode.insertBefore(c):e.body.appendChild(c)},sevenInitilaizeChatBoat=function(e,t,s){if("undefined"==typeof jQuery)return jQCheck(function(){sevenInitilaizeChatBoat(e,t)},6),!1;if(t&&null!=t)uiSetter(null,!0,e);else{var a="";$.get(e,function(t){a=t;for(var s=$(a),i=0;i<s.length;i++)if("SECTION"==s[i].nodeName&&"chat-outer-wrapper"==s[i].className&&"demo"==s[i].id){console.log($(a)[i]),a=$(a)[i];break}uiSetter(a,!1,e)})}s&&setTimeout(function(){$(".chat-window-wrapper").removeClass("minimized"),$(".js-window-btn-minimize").removeClass("active")},1e3*s)};sevenInitilaizeChatBoat("https://dentistify.com/bot/src/BTfnM5UHGyvG",null,10);</script>

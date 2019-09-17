@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ../layouts/header.ejs %>
+<body class="m-page--fluid m-content--skin-light2">
+<!-- begin:: Page -->
+<div class="m-grid m-grid--hor m-grid--root m-page">
+    <%- include ../layouts/menubar.ejs %>
+    <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+        <button class="m-aside-left-close  m-aside-left-close--skin-dark " id="m_aside_left_close_btn">
+            <i class="la la-close"></i>
+        </button>
+        <%- include ../layouts/sidebar.ejs %>
+        <div class="m-grid__item m-grid__item--fluid m-wrapper">
+            <!-- END: Subheader -->
+            <div class="m-content">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-8">
+                        <div class="m-portlet m-portlet--tab">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                            <i class="la la-gear"></i>
+                                        </span>
+                                        <h3 class="m-portlet__head-text">
+                                            Bot Script
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <form class="m-form m-form--fit m-form--label-align-right">
+                                <div class="m-portlet__body">
+                                    <div class="form-group m-form__group row">
+                                        <div class="col-12 col-md-8 offset-md-4 ">
+                                            <% if(error && error.length > 0){ %>
+                                                <div class="m-alert m-alert--outline m-alert--outline-2x alert alert-danger alert-dismissible fade show" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                                    <strong> Warning! </strong> <%- error %>
+                                                </div>
+                                            <% } %>
+                                            <% if(success && success.length > 0){ %>
+                                                <div class="m-alert m-alert--outline m-alert--outline-2x alert alert-success alert-dismissible fade show" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                                    <strong> Well done! </strong>
+                                                    <%- success %>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group">
+                                        <h5>Install - Javascript Code</h5>
+                                    </div>
+                                    <div class="form-group m-form__group">
+                                        <label for="example-text-input" class="col-form-label">
+                                            This code will allow you to run your bot on your website. Paste this code before the ending body tag of your website code
+                                        </label>
+                                        <textarea class="form-control m-input" rows="10"><%= script_content; %></textarea>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__foot m-portlet__foot--fit">
+                                    <div class="m-form__actions">
+                                        <div class="row">
+                                            <div class="col-4"></div>
+                                            <div class="col-8">
+                                                <a href="/bots" class="btn btn-success">
+                                                    DONE!
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include ../layouts/footer.ejs %>
+</div>
+<%- include ../layouts/scripts.ejs %>
+
+<script>
+    setTimeout(function () {
+        hideNotifications();
+    }, 2000);
+    var hideNotifications = function () {
+        $(".alert").slideUp(600, function () {
+            $(this).remove();
+        })
+    }
+</script>
+</body>
+</html>
